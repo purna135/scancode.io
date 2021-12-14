@@ -28,7 +28,7 @@
   "model": "scanpipe.codebaseresource",
   "pk": 42,
   "fields": {
-    "path": "codebase",
+    "path": ".",
     "size": 0,
     "sha1": "",
     "md5": "",
@@ -46,7 +46,7 @@
     "status": "",
     "type": "directory",
     "extra_data": {},
-    "name": "codebase",
+    "name": ".",
     "extension": "",
     "programming_language": "",
     "mime_type": "",
@@ -57,7 +57,7 @@
   "model": "scanpipe.codebaseresource",
   "pk": 43,
   "fields": {
-    "path": "codebase/asgiref-3.3.0-py3-none-any.whl",
+    "path": "asgiref-3.3.0-py3-none-any.whl",
     "size": 19948,
     "sha1": "c03f67211a311b13d1294ac8af7cb139ee34c4f9",
     "md5": "5bce1df6dedc53a41a9a6b40d7b1699e",
@@ -86,7 +86,7 @@
   "model": "scanpipe.codebaseresource",
   "pk": 44,
   "fields": {
-    "path": "codebase/asgiref-3.3.0-py3-none-any.whl-extract",
+    "path": "asgiref-3.3.0-py3-none-any.whl-extract",
     "size": 0,
     "sha1": "",
     "md5": "",
@@ -115,7 +115,7 @@
   "model": "scanpipe.codebaseresource",
   "pk": 45,
   "fields": {
-    "path": "codebase/asgiref-3.3.0-py3-none-any.whl-extract/asgiref",
+    "path": "asgiref-3.3.0-py3-none-any.whl-extract/asgiref",
     "size": 0,
     "sha1": "",
     "md5": "",
@@ -144,7 +144,7 @@
   "model": "scanpipe.codebaseresource",
   "pk": 46,
   "fields": {
-    "path": "codebase/asgiref-3.3.0-py3-none-any.whl-extract/asgiref/__init__.py",
+    "path": "asgiref-3.3.0-py3-none-any.whl-extract/asgiref/__init__.py",
     "size": 22,
     "sha1": "91bc786d907bf3ca8b8e6277063107975780f9ca",
     "md5": "4910b756f4e611055140e80f757d9325",
@@ -173,7 +173,7 @@
   "model": "scanpipe.codebaseresource",
   "pk": 47,
   "fields": {
-    "path": "codebase/asgiref-3.3.0-py3-none-any.whl-extract/asgiref/compatibility.py",
+    "path": "asgiref-3.3.0-py3-none-any.whl-extract/asgiref/compatibility.py",
     "size": 1598,
     "sha1": "9c74e64e9a71903bb227907ea1806eac77e52434",
     "md5": "5231077fd0628314246fcba7817b561e",
@@ -202,7 +202,7 @@
   "model": "scanpipe.codebaseresource",
   "pk": 48,
   "fields": {
-    "path": "codebase/asgiref-3.3.0-py3-none-any.whl-extract/asgiref/current_thread_executor.py",
+    "path": "asgiref-3.3.0-py3-none-any.whl-extract/asgiref/current_thread_executor.py",
     "size": 2974,
     "sha1": "aacf7e5e2e5ba78ccfb67fa10e9e6b22c3935c9b",
     "md5": "b4c45f37055d88dd11b15eb4de51b074",
@@ -231,7 +231,7 @@
   "model": "scanpipe.codebaseresource",
   "pk": 49,
   "fields": {
-    "path": "codebase/asgiref-3.3.0-py3-none-any.whl-extract/asgiref/local.py",
+    "path": "asgiref-3.3.0-py3-none-any.whl-extract/asgiref/local.py",
     "size": 4849,
     "sha1": "0de5075d1ce4a1a17d70ad6ee523e3d947074899",
     "md5": "e4103a2fcd6a3f23a036307c978271d7",
@@ -260,7 +260,7 @@
   "model": "scanpipe.codebaseresource",
   "pk": 50,
   "fields": {
-    "path": "codebase/asgiref-3.3.0-py3-none-any.whl-extract/asgiref/server.py",
+    "path": "asgiref-3.3.0-py3-none-any.whl-extract/asgiref/server.py",
     "size": 5915,
     "sha1": "ebe97b4c2689537e9387dd8dac353c3e010f8f02",
     "md5": "5b7619584de19d8f1a00fb5a43349153",
@@ -289,7 +289,7 @@
   "model": "scanpipe.codebaseresource",
   "pk": 51,
   "fields": {
-    "path": "codebase/asgiref-3.3.0-py3-none-any.whl-extract/asgiref/sync.py",
+    "path": "asgiref-3.3.0-py3-none-any.whl-extract/asgiref/sync.py",
     "size": 14081,
     "sha1": "702381ba6ecb30bbfdcaf0d466a25f470dd9938b",
     "md5": "44ec43af7ee367c7d6a5808d37133144",
@@ -318,7 +318,7 @@
   "model": "scanpipe.codebaseresource",
   "pk": 52,
   "fields": {
-    "path": "codebase/asgiref-3.3.0-py3-none-any.whl-extract/asgiref/testing.py",
+    "path": "asgiref-3.3.0-py3-none-any.whl-extract/asgiref/testing.py",
     "size": 3119,
     "sha1": "534de2315197b14d0571edc5ed3b3b8ceade0d24",
     "md5": "aff31de5fa753643adacf0311aa553f4",
@@ -347,7 +347,7 @@
   "model": "scanpipe.codebaseresource",
   "pk": 53,
   "fields": {
-    "path": "codebase/asgiref-3.3.0-py3-none-any.whl-extract/asgiref/timeout.py",
+    "path": "asgiref-3.3.0-py3-none-any.whl-extract/asgiref/timeout.py",
     "size": 3914,
     "sha1": "361968f116e8ff9156511bf22f6aa04426f0c540",
     "md5": "8114ef1d7c1488ebf3a1766dbd39d427",
@@ -428,7 +428,7 @@
   "model": "scanpipe.codebaseresource",
   "pk": 54,
   "fields": {
-    "path": "codebase/asgiref-3.3.0-py3-none-any.whl-extract/asgiref/wsgi.py",
+    "path": "asgiref-3.3.0-py3-none-any.whl-extract/asgiref/wsgi.py",
     "size": 6575,
     "sha1": "1f06eb4dd6d38b1a3e2a9b9e751744b303c37e0d",
     "md5": "4eed1361d0e454149f95fca85c84f33f",
@@ -457,7 +457,7 @@
   "model": "scanpipe.codebaseresource",
   "pk": 55,
   "fields": {
-    "path": "codebase/asgiref-3.3.0-py3-none-any.whl-extract/asgiref-3.3.0.dist-info",
+    "path": "asgiref-3.3.0-py3-none-any.whl-extract/asgiref-3.3.0.dist-info",
     "size": 0,
     "sha1": "",
     "md5": "",
@@ -486,7 +486,7 @@
   "model": "scanpipe.codebaseresource",
   "pk": 56,
   "fields": {
-    "path": "codebase/asgiref-3.3.0-py3-none-any.whl-extract/asgiref-3.3.0.dist-info/LICENSE",
+    "path": "asgiref-3.3.0-py3-none-any.whl-extract/asgiref-3.3.0.dist-info/LICENSE",
     "size": 1552,
     "sha1": "baf11129ce63c4eef654f39a360b31cfc7d1ac67",
     "md5": "f09eb47206614a4954c51db8a94840fa",
@@ -563,7 +563,7 @@
   "model": "scanpipe.codebaseresource",
   "pk": 57,
   "fields": {
-    "path": "codebase/asgiref-3.3.0-py3-none-any.whl-extract/asgiref-3.3.0.dist-info/METADATA",
+    "path": "asgiref-3.3.0-py3-none-any.whl-extract/asgiref-3.3.0.dist-info/METADATA",
     "size": 8800,
     "sha1": "53d0f6e1cbf6a3c31fb0aa3089b2ca98ad95fc49",
     "md5": "4b50d67ff7994afcad22c6ef154cf052",
@@ -750,7 +750,7 @@
   "model": "scanpipe.codebaseresource",
   "pk": 58,
   "fields": {
-    "path": "codebase/asgiref-3.3.0-py3-none-any.whl-extract/asgiref-3.3.0.dist-info/RECORD",
+    "path": "asgiref-3.3.0-py3-none-any.whl-extract/asgiref-3.3.0.dist-info/RECORD",
     "size": 1073,
     "sha1": "5854ecf1ad649848d7cda8096d09ac258c888208",
     "md5": "38e56802a5adcafeae35efc6e3d218ba",
@@ -779,7 +779,7 @@
   "model": "scanpipe.codebaseresource",
   "pk": 59,
   "fields": {
-    "path": "codebase/asgiref-3.3.0-py3-none-any.whl-extract/asgiref-3.3.0.dist-info/top_level.txt",
+    "path": "asgiref-3.3.0-py3-none-any.whl-extract/asgiref-3.3.0.dist-info/top_level.txt",
     "size": 8,
     "sha1": "612390bd0d0227c009f9c99b479878adf7ac2f23",
     "md5": "680e61db4d95c8d9501b7a49fa2bf0b2",
@@ -808,7 +808,7 @@
   "model": "scanpipe.codebaseresource",
   "pk": 60,
   "fields": {
-    "path": "codebase/asgiref-3.3.0-py3-none-any.whl-extract/asgiref-3.3.0.dist-info/WHEEL",
+    "path": "asgiref-3.3.0-py3-none-any.whl-extract/asgiref-3.3.0.dist-info/WHEEL",
     "size": 92,
     "sha1": "ddd91bc89b15fc5c66e0fa259392955c74ba041f",
     "md5": "5ccc7519eb42f1dfceee6e7d685f1ff5",
