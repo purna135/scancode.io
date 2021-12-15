@@ -1,6 +1,6 @@
 {
-  "name": "codebase",
-  "path": "codebase",
+  "name": ".",
+  "path": ".",
   "children": [
     {
       "name": "asgiref-3.3.0-py3-none-any.whl",

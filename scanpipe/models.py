@@ -672,10 +672,7 @@ class Project(UUIDPKModel, ExtraDataFieldMixin, models.Model):
         Returns all files and directories path of the codebase/ directory recursively,
         including the codebase/ directory itself.
         """
-        return itertools.chain(
-            (self.codebase_path,),
-            self.codebase_path.rglob("*")
-        )
+        return itertools.chain((self.codebase_path,), self.codebase_path.rglob("*"))
 
     @cached_property
     def can_add_input(self):
@@ -1591,7 +1588,9 @@ class CodebaseResource(
         if self.path == ".":
             return self.project.codebaseresources.exclude(path=".")
         else:
-            return self.project.codebaseresources.filter(path__startswith=f"{self.path}/")
+            return self.project.codebaseresources.filter(
+                path__startswith=f"{self.path}/"
+            )
 
     def children(self, codebase=None):
         """
@@ -1605,10 +1604,11 @@ class CodebaseResource(
         `codebase` is not used in this context but required for compatibility
         with the commoncode.resource.Codebase class API.
         """
-        exactly_one_sub_directory = "[^/]+$"
         if self.path == ".":
-            children_regex = rf"{exactly_one_sub_directory}"
+            unnested_file_or_directory = "^[^/]+$"
+            children_regex = rf"{unnested_file_or_directory}"
         else:
+            exactly_one_sub_directory = "[^/]+$"
             children_regex = rf"^{self.path}/{exactly_one_sub_directory}"
         return (
             self.descendants()
