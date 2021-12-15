@@ -366,7 +366,7 @@ def create_codebase_resources(project, scanned_codebase):
     CodebaseResource objects as the existing objects (based on the `path`) will be
     skipped.
     """
-    for scanned_resource in scanned_codebase.walk(skip_root=True):
+    for scanned_resource in scanned_codebase.walk():
         resource_data = {}
 
         for field in CodebaseResource._meta.fields:
@@ -380,7 +380,14 @@ def create_codebase_resources(project, scanned_codebase):
 
         resource_type = "FILE" if scanned_resource.is_file else "DIRECTORY"
         resource_data["type"] = CodebaseResource.Type[resource_type]
-        resource_path = scanned_resource.get_path(strip_root=True)
+
+        if scanned_resource.is_root:
+            # In ScanCode.io, we represent the root CodebaseResource using "."
+            # as its name and path
+            resource_path = "."
+            resource_data["name"] = "."
+        else:
+            resource_path = scanned_resource.get_path(strip_root=True)
 
         CodebaseResource.objects.get_or_create(
             project=project,
@@ -395,12 +402,17 @@ def create_discovered_packages(project, scanned_codebase):
     object to the database as a DiscoveredPackage of `project`.
     Relate package resources to CodebaseResource.
     """
-    for scanned_resource in scanned_codebase.walk(skip_root=True):
+    for scanned_resource in scanned_codebase.walk():
         scanned_packages = getattr(scanned_resource, "packages", [])
         if not scanned_packages:
             continue
 
-        scanned_resource_path = scanned_resource.get_path(strip_root=True)
+        if scanned_resource.is_root:
+            # In ScanCode.io, we represent the root CodebaseResource using "."
+            # as its path
+            scanned_resource_path = "."
+        else:
+            scanned_resource_path = scanned_resource.get_path(strip_root=True)
         cbr = CodebaseResource.objects.get(project=project, path=scanned_resource_path)
 
         for scan_data in scanned_packages:
