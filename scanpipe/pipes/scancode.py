@@ -231,8 +231,7 @@ def save_scan_package_results(codebase_resource, scan_results, scan_errors):
     Saves the resource scan package results in the database.
     Creates project errors if any occurred during the scan.
     """
-    packages = scan_results.get("packages", [])
-    if packages:
+    if packages := scan_results.get("packages", []):
         for package_data in packages:
             codebase_resource.create_and_add_package(package_data)
         codebase_resource.status = "application-package"
@@ -272,7 +271,7 @@ def _scan_and_save(resource_qs, scan_func, save_func):
     max_workers = get_max_workers(keep_available=1)
 
     if max_workers <= 0:
-        with_threading = False if max_workers == -1 else True
+        with_threading = max_workers != -1
         for index, resource in enumerate(resource_iterator):
             _log_progress(scan_func, resource, resource_count, index)
             scan_results, scan_errors = scan_func(resource.location, with_threading)

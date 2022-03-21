@@ -45,7 +45,7 @@ class ScanPipeViewsTest(TestCase):
     def test_scanpipe_views_project_list_is_archived(self):
         project2 = Project.objects.create(name="project2", is_archived=True)
         url = reverse("project_list")
-        url_with_filter = url + "?is_archived=true"
+        url_with_filter = f'{url}?is_archived=true'
 
         response = self.client.get(url)
         self.assertContains(response, self.project1.name)

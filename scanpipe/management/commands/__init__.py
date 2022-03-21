@@ -99,23 +99,21 @@ class RunStatusCommandMixin:
             inputs, missing_inputs = project.inputs_with_source
             if inputs:
                 message.append("\nInputs:")
-                for input in inputs:
-                    message.append(f" - {input.get('name')} ({input.get('source')})")
+                message.extend(
+                    f" - {input.get('name')} ({input.get('source')})"
+                    for input in inputs
+                )
 
-            runs = project.runs.all()
-            if runs:
+            if runs := project.runs.all():
                 message.append("\nPipelines:")
                 for run in runs:
                     status_code = self.get_run_status_code(run)
                     msg = f" [{status_code}] {run.pipeline_name}"
-                    execution_time = run.execution_time
-                    if execution_time:
+                    if execution_time := run.execution_time:
                         msg += f" (executed in {execution_time} seconds)"
                     message.append(msg)
                     if run.log:
-                        for line in run.log.rstrip("\n").split("\n"):
-                            message.append(3 * " " + line)
-
+                        message.extend(3 * " " + line for line in run.log.rstrip("\n").split("\n"))
         for line in message:
             self.stdout.write(line)
 
@@ -152,7 +150,7 @@ class AddInputCommandMixin:
 
         msg = "File(s) copied to the project inputs directory:"
         self.stdout.write(self.style.SUCCESS(msg))
-        msg = "\n".join(["- " + filename for filename in copied])
+        msg = "\n".join([f"- {filename}" for filename in copied])
         self.stdout.write(msg)
 
     @staticmethod
@@ -177,12 +175,12 @@ class AddInputCommandMixin:
             self.project.add_downloads(downloads)
             msg = "File(s) downloaded to the project inputs directory:"
             self.stdout.write(self.style.SUCCESS(msg))
-            msg = "\n".join(["- " + downloaded.filename for downloaded in downloads])
+            msg = "\n".join([f"- {downloaded.filename}" for downloaded in downloads])
             self.stdout.write(msg)
 
         if errors:
             self.stdout.write(self.style.ERROR("Could not fetch URL(s):"))
-            msg = "\n".join(["- " + url for url in errors])
+            msg = "\n".join([f"- {url}" for url in errors])
             self.stdout.write(self.style.ERROR(msg))
 
 

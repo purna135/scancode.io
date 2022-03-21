@@ -87,7 +87,7 @@ class Command(BaseCommand):
     def handle(self, *pipeline_names, **options):
         if options["list"]:
             for pipeline_name, pipeline_class in scanpipe_app.pipelines.items():
-                self.stdout.write("- " + self.style.SUCCESS(pipeline_name))
+                self.stdout.write(f"- {self.style.SUCCESS(pipeline_name)}")
                 self.stdout.write(indent(pipeline_class.get_doc(), "  "), ending="\n\n")
             sys.exit(0)
 
@@ -113,7 +113,7 @@ class Command(BaseCommand):
             )
 
         separator = "\n - "
-        msg = f"Graph(s) generated:{separator}" + separator.join(outputs)
+        msg = f"Graph(s) generated:{separator}{separator.join(outputs)}"
         self.stdout.write(self.style.SUCCESS(msg))
 
     @staticmethod

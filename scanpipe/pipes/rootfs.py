@@ -200,7 +200,7 @@ def scan_rootfs_for_system_packages(project, rootfs, detect_licenses=True):
     DiscoveredPackage; otherwise, keep that as a missing file.
     """
     if not rootfs.distro:
-        raise DistroNotFound(f"Distro not found.")
+        raise DistroNotFound("Distro not found.")
 
     distro_id = rootfs.distro.identifier
     if distro_id not in PACKAGE_GETTER_BY_DISTRO:
@@ -249,9 +249,11 @@ def scan_rootfs_for_system_packages(project, rootfs, detect_licenses=True):
                 logger.info(f"      added as system-package to: {purl}")
                 codebase_resource.save()
 
-            if has_hash_diff(install_file, codebase_resource):
-                if install_file.path not in modified_resources:
-                    modified_resources.append(install_file.path)
+            if (
+                has_hash_diff(install_file, codebase_resource)
+                and install_file.path not in modified_resources
+            ):
+                modified_resources.append(install_file.path)
 
         created_package.missing_resources = missing_resources
         created_package.modified_resources = modified_resources

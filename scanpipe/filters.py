@@ -112,9 +112,7 @@ class JSONContainsFilter(django_filters.CharFilter):
     """
 
     def filter(self, qs, value):
-        if value:
-            return qs.json_field_contains(self.field_name, value)
-        return qs
+        return qs.json_field_contains(self.field_name, value) if value else qs
 
 
 class InPackageFilter(django_filters.ChoiceFilter):

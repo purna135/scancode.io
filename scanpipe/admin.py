@@ -61,8 +61,7 @@ class ListDisplayField:
 
     def __call__(self, obj):
         if obj:
-            field_value = getattr(obj, self.name)
-            if field_value:
+            if field_value := getattr(obj, self.name):
                 return self.to_representation(obj, field_value)
 
     def __repr__(self):
@@ -128,10 +127,7 @@ class PathListFilter(admin.SimpleListFilter):
     parameter_name = "path"
 
     def lookups(self, request, model_admin):
-        value = self.value()
-        if value:
-            return [(value, value)]
-        return []
+        return [(value, value)] if (value := self.value()) else []
 
     def has_output(self):
         return True

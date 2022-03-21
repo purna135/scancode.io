@@ -168,9 +168,9 @@ class ScanPipeConfig(AppConfig):
         include the proper content, we want to raise an exception while the app
         is loading to warn sysadmins about the issue.
         """
-        policies_file_location = getattr(settings, "SCANCODEIO_POLICIES_FILE", None)
-
-        if policies_file_location:
+        if policies_file_location := getattr(
+            settings, "SCANCODEIO_POLICIES_FILE", None
+        ):
             policies_file = Path(policies_file_location).expanduser()
 
             if policies_file.exists():
@@ -183,7 +183,7 @@ class ScanPipeConfig(AppConfig):
                 )
 
             else:
-                logger.debug(style.WARNING(f"Policies file not found."))
+                logger.debug(style.WARNING("Policies file not found."))
 
     @staticmethod
     def get_policies_index(policies_list, key):
@@ -206,9 +206,7 @@ class ScanPipeConfig(AppConfig):
         logger.info("Synchronizing QUEUED and RUNNING Runs with their related Jobs...")
 
         run_model = self.get_model("Run")
-        queued_or_running = run_model.objects.queued_or_running()
-
-        if queued_or_running:
+        if queued_or_running := run_model.objects.queued_or_running():
             logger.info(f"{len(queued_or_running)} Runs to synchronize:")
             for run in queued_or_running:
                 run.sync_with_job()

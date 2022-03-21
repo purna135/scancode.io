@@ -354,7 +354,7 @@ class ScanPipeAPITest(TransactionTestCase):
         expected = {"status": "Resource not found. Use ?path=<resource_path>"}
         self.assertEqual(expected, response.data)
 
-        response = self.csrf_client.get(url + f"?path={self.resource1.path}")
+        response = self.csrf_client.get(f"{url}?path={self.resource1.path}")
         self.assertEqual(status.HTTP_400_BAD_REQUEST, response.status_code)
         expected = {"status": "File not available"}
         self.assertEqual(expected, response.data)

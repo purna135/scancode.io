@@ -108,10 +108,7 @@ def tag_installed_package_files(project, root_dir_pattern, package, q_objects=No
     for q_object in q_objects or []:
         lookup &= q_object
 
-    installed_package_files = qs.filter(lookup)
-    # If we find files whose names start with `root_dir_pattern`, we consider
-    # these files to be part of the Package `package` and tag these files as such.
-    if installed_package_files:
+    if installed_package_files := qs.filter(lookup):
         created_package = pipes.update_or_create_package(project, package.to_dict())
         for installed_package_file in installed_package_files:
             installed_package_file.discovered_packages.add(created_package)
@@ -140,7 +137,7 @@ def _tag_python_software(project):
         if not version:
             version = "nv"
         if version != "nv":
-            version = ".".join(digit for digit in version)
+            version = ".".join(version)
 
         python_versions_by_path[python_root_path] = version
 

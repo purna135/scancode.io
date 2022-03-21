@@ -93,9 +93,9 @@ class ScanPackage(Pipeline):
         """
         Extracts package archive with extractcode.
         """
-        extract_errors = extract_archive(self.archive_path, self.project.codebase_path)
-
-        if extract_errors:
+        if extract_errors := extract_archive(
+            self.archive_path, self.project.codebase_path
+        ):
             self.add_error("\n".join(extract_errors))
 
     def run_scancode(self):

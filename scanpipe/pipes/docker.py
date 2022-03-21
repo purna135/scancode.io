@@ -119,12 +119,13 @@ def get_image_data(image, layer_path_segments=2):
     the locations unmodified if ``layer_path_segments`` is 0).
     """
     exclude_from_img = ["extracted_location", "archive_location"]
-    image_data = {
+    return {
         key: value
-        for key, value in image.to_dict(layer_path_segments=layer_path_segments).items()
+        for key, value in image.to_dict(
+            layer_path_segments=layer_path_segments
+        ).items()
         if key not in exclude_from_img
     }
-    return image_data
 
 
 def create_codebase_resources(project, image):
@@ -149,7 +150,7 @@ def scan_image_for_system_packages(project, image, detect_licenses=True):
     DiscoveredPackage; otherwise, keep that as a missing file.
     """
     if not image.distro:
-        raise rootfs.DistroNotFound(f"Distro not found.")
+        raise rootfs.DistroNotFound("Distro not found.")
 
     distro_id = image.distro.identifier
     if distro_id not in rootfs.PACKAGE_GETTER_BY_DISTRO:
@@ -198,9 +199,11 @@ def scan_image_for_system_packages(project, image, detect_licenses=True):
                     logger.info(f"      added as system-package to: {purl}")
                     codebase_resource.save()
 
-                if rootfs.has_hash_diff(install_file, codebase_resource):
-                    if install_file.path not in modified_resources:
-                        modified_resources.append(install_file.path)
+                if (
+                    rootfs.has_hash_diff(install_file, codebase_resource)
+                    and install_file.path not in modified_resources
+                ):
+                    modified_resources.append(install_file.path)
 
             if not found_res and install_file_path not in missing_resources:
                 missing_resources.append(install_file_path)

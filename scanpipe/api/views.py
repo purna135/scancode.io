@@ -96,8 +96,7 @@ class ProjectFilterSet(django_filters.FilterSet):
 
         lookups = Q()
         for name in names:
-            name = name.strip()
-            if name:
+            if name := name.strip():
                 lookups |= Q(name__contains=name)
 
         return qs.filter(lookups)
@@ -215,8 +214,7 @@ class ProjectViewSet(
     def add_pipeline(self, request, *args, **kwargs):
         project = self.get_object()
 
-        pipeline = request.data.get("pipeline")
-        if pipeline:
+        if pipeline := request.data.get("pipeline"):
             if pipeline in scanpipe_app.pipelines:
                 execute_now = request.data.get("execute_now")
                 project.add_pipeline(pipeline, execute_now)

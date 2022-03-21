@@ -92,9 +92,8 @@ class PipelineBaseForm(forms.Form):
     )
 
     def handle_pipeline(self, project):
-        pipeline = self.cleaned_data["pipeline"]
-        execute_now = self.cleaned_data["execute_now"]
-        if pipeline:
+        if pipeline := self.cleaned_data["pipeline"]:
+            execute_now = self.cleaned_data["execute_now"]
             project.add_pipeline(pipeline, execute_now)
 
 

@@ -94,7 +94,7 @@ class UUIDPKModel(models.Model):
 
     @property
     def short_uuid(self):
-        return str(self.uuid)[0:8]
+        return str(self.uuid)[:8]
 
 
 class AbstractTaskFieldsModel(models.Model):
@@ -241,8 +241,7 @@ class AbstractTaskFieldsModel(models.Model):
 
     @property
     def execution_time_for_display(self):
-        execution_time = self.execution_time
-        if execution_time:
+        if execution_time := self.execution_time:
             message = f"{execution_time} seconds"
             if execution_time > 3600:
                 message += f" ({execution_time / 3600:.1f} hours)"
@@ -622,18 +621,13 @@ class Project(UUIDPKModel, ExtraDataFieldMixin, models.Model):
         input_path = self.input_path
         input_sources = dict(self.input_sources)
 
-        inputs = []
-        for path in input_path.glob("*"):
-            inputs.append(
-                {
+        inputs = [{
                     "name": path.name,
                     "is_file": path.is_file(),
                     "size": path.stat().st_size,
                     **multi_checksums(path, ["sha256"]),
                     "source": input_sources.pop(path.name, "not_found"),
-                }
-            )
-
+                } for path in input_path.glob("*")]
         missing_inputs = input_sources
         return inputs, missing_inputs
 
@@ -666,8 +660,7 @@ class Project(UUIDPKModel, ExtraDataFieldMixin, models.Model):
         Returns the latest output file with the "filename" prefix, for example
         "scancode-<timestamp>.json".
         """
-        output_files = sorted(self.output_path.glob(f"*{filename}*.json"))
-        if output_files:
+        if output_files := sorted(self.output_path.glob(f"*{filename}*.json")):
             return output_files[-1]
 
     def walk_codebase_path(self):
@@ -1085,11 +1078,7 @@ class Run(UUIDPKModel, ProjectRelatedModel, AbstractTaskFieldsModel):
         """
         RunStatus = self.Status
 
-        if settings.SCANCODEIO_ASYNC:
-            job_status = self.job_status
-        else:
-            job_status = None
-
+        job_status = self.job_status if settings.SCANCODEIO_ASYNC else None
         if not job_status:
             if self.status == RunStatus.QUEUED:
                 logger.info(
@@ -1129,8 +1118,9 @@ class Run(UUIDPKModel, ProjectRelatedModel, AbstractTaskFieldsModel):
                 )
                 self.set_task_ended(
                     exitcode=1,
-                    output=f"Job was moved to the FailedJobRegistry during cleanup",
+                    output="Job was moved to the FailedJobRegistry during cleanup",
                 )
+
 
             else:
                 logger.info(
@@ -1193,8 +1183,7 @@ class Run(UUIDPKModel, ProjectRelatedModel, AbstractTaskFieldsModel):
 
         profiler = {}
         for line in self.log.split("\n"):
-            match = pattern.search(line)
-            if match:
+            if match := pattern.search(line):
                 step, runtime = match.groups()
                 profiler[step] = float(runtime)
 
@@ -1202,7 +1191,7 @@ class Run(UUIDPKModel, ProjectRelatedModel, AbstractTaskFieldsModel):
             return profiler
 
         total_runtime = sum(profiler.values())
-        padding = max(len(name) for name in profiler.keys()) + 1
+        padding = max(len(name) for name in profiler) + 1
         for step, runtime in profiler.items():
             percent = round(runtime * 100 / total_runtime, 1)
             output_str = f"{step:{padding}} {runtime:>3} seconds {percent}%"
@@ -1214,9 +1203,7 @@ class Run(UUIDPKModel, ProjectRelatedModel, AbstractTaskFieldsModel):
 
 class CodebaseResourceQuerySet(ProjectRelatedQuerySet):
     def status(self, status=None):
-        if status:
-            return self.filter(status=status)
-        return self.filter(~Q(status=""))
+        return self.filter(status=status) if status else self.filter(~Q(status=""))
 
     def no_status(self):
         return self.filter(status="")
@@ -1557,8 +1544,7 @@ class CodebaseResource(
 
         alerts = []
         for license_data in self.licenses:
-            policy = license_data.get("policy")
-            if policy:
+            if policy := license_data.get("policy"):
                 alerts.append(policy.get("compliance_alert") or ok)
             else:
                 alerts.append(missing)
@@ -1616,8 +1602,7 @@ class CodebaseResource(
         for child in self.children().iterator():
             if topdown:
                 yield child
-            for subchild in child.walk(topdown=topdown):
-                yield subchild
+            yield from child.walk(topdown=topdown)
             if not topdown:
                 yield child
 
@@ -1770,13 +1755,11 @@ class DiscoveredPackage(
         is created instead of a new DiscoveredPackage instance.
         """
         required_fields = ["type", "name", "version"]
-        missing_values = [
+        if missing_values := [
             field_name
             for field_name in required_fields
             if not package_data.get(field_name)
-        ]
-
-        if missing_values:
+        ]:
             message = (
                 f"No values for the following required fields: "
                 f"{', '.join(missing_values)}"
@@ -1785,8 +1768,7 @@ class DiscoveredPackage(
             project.add_error(error=message, model=cls, details=package_data)
             return
 
-        qualifiers = package_data.get("qualifiers")
-        if qualifiers:
+        if qualifiers := package_data.get("qualifiers"):
             package_data["qualifiers"] = normalize_qualifiers(qualifiers, encode=True)
 
         cleaned_package_data = {
@@ -1823,9 +1805,6 @@ class DiscoveredPackage(
             if not current_value:
                 setattr(self, field_name, value)
                 updated_fields.append(field_name)
-            elif current_value != value:
-                pass  # TODO: handle this case
-
         if updated_fields:
             self.save()
 

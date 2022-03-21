@@ -258,7 +258,7 @@ def get_model_serializer(model_class):
         CodebaseResource: CodebaseResourceSerializer,
         DiscoveredPackage: DiscoveredPackageSerializer,
         ProjectError: ProjectErrorSerializer,
-    }.get(model_class, None)
+    }.get(model_class)
 
     if not serializer:
         raise LookupError(f"No Serializer found for {model_class}")
@@ -272,5 +272,4 @@ def get_serializer_fields(model_class):
     a given `model_class`.
     """
     serializer = get_model_serializer(model_class)
-    fields = list(serializer().get_fields().keys())
-    return fields
+    return list(serializer().get_fields().keys())

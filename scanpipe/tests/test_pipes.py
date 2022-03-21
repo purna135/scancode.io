@@ -668,7 +668,7 @@ class ScanPipePipesTest(TestCase):
         project = Project.objects.get(name="asgiref")
         project_codebase = codebase.ProjectCodebase(project)
 
-        topdown_paths = list(r.path for r in project_codebase.walk(topdown=True))
+        topdown_paths = [r.path for r in project_codebase.walk(topdown=True)]
         expected_topdown_paths = [
             "codebase",
             "codebase/asgiref-3.3.0.whl",
@@ -691,7 +691,7 @@ class ScanPipePipesTest(TestCase):
         ]
         self.assertEqual(expected_topdown_paths, topdown_paths)
 
-        bottom_up_paths = list(r.path for r in project_codebase.walk(topdown=False))
+        bottom_up_paths = [r.path for r in project_codebase.walk(topdown=False)]
         expected_bottom_up_paths = [
             "codebase/asgiref-3.3.0.whl",
             "codebase/asgiref-3.3.0.whl-extract/asgiref/compatibility.py",
