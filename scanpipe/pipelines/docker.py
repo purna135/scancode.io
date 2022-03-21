@@ -59,8 +59,7 @@ class Docker(root_filesystems.RootFS):
         """
         Extracts layers from input images.
         """
-        errors = docker.extract_layers_from_images(self.project, self.images)
-        if errors:
+        if errors := docker.extract_layers_from_images(self.project, self.images):
             self.add_error("\n".join(errors))
 
     def find_images_os_and_distro(self):

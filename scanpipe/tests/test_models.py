@@ -1164,7 +1164,7 @@ class ScanPipeModelsTest(TestCase):
         call_command("loaddata", fixtures, **{"verbosity": 0})
         asgiref_root = self.project_asgiref.codebaseresources.get(path="codebase")
 
-        topdown_paths = list(r.path for r in asgiref_root.walk(topdown=True))
+        topdown_paths = [r.path for r in asgiref_root.walk(topdown=True)]
         expected_topdown_paths = [
             "codebase/asgiref-3.3.0.whl",
             "codebase/asgiref-3.3.0.whl-extract",
@@ -1186,7 +1186,7 @@ class ScanPipeModelsTest(TestCase):
         ]
         self.assertEqual(expected_topdown_paths, topdown_paths)
 
-        bottom_up_paths = list(r.path for r in asgiref_root.walk(topdown=False))
+        bottom_up_paths = [r.path for r in asgiref_root.walk(topdown=False)]
         expected_bottom_up_paths = [
             "codebase/asgiref-3.3.0.whl",
             "codebase/asgiref-3.3.0.whl-extract/asgiref/compatibility.py",

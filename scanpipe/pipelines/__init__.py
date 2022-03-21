@@ -114,14 +114,14 @@ class Pipeline:
             try:
                 step(self)
             except Exception as e:
-                self.log(f"Pipeline failed")
+                self.log("Pipeline failed")
                 tb = "".join(traceback.format_tb(e.__traceback__))
                 return 1, f"{e}\n\nTraceback:\n{tb}"
 
             run_time = timeit.default_timer() - start_time
             self.log(f"Step [{step.__name__}] completed in {run_time:.2f} seconds")
 
-        self.log(f"Pipeline completed")
+        self.log("Pipeline completed")
 
         return 0, ""
 

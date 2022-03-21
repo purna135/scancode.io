@@ -85,11 +85,10 @@ def update_or_create_package(project, package_data, codebase_resource=None):
     if package:
         package.update_from_data(package_data)
 
+    elif codebase_resource:
+        package = codebase_resource.create_and_add_package(package_data)
     else:
-        if codebase_resource:
-            package = codebase_resource.create_and_add_package(package_data)
-        else:
-            package = DiscoveredPackage.create_from_data(project, package_data)
+        package = DiscoveredPackage.create_from_data(project, package_data)
 
     return package
 
@@ -160,8 +159,7 @@ def _stream_process(process, stream_to=logger.info):
     for line in process.stdout:
         stream_to(line.rstrip("\n"))
 
-    has_terminated = exitcode is not None
-    return has_terminated
+    return exitcode is not None
 
 
 def run_command(cmd, log_output=False):
@@ -198,7 +196,4 @@ def remove_prefix(text, prefix):
     """
     Removes the `prefix` from `text`.
     """
-    if text.startswith(prefix):
-        prefix_len = len(prefix)
-        return text[prefix_len:]
-    return text
+    return text[len(prefix):] if text.startswith(prefix) else text

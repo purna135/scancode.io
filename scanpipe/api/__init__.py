@@ -30,8 +30,9 @@ class ExcludeFromListViewMixin:
     def get_fields(self):
         fields = super().get_fields()
 
-        exclude_from_list_view = getattr(self.Meta, "exclude_from_list_view", None)
-        if exclude_from_list_view:
+        if exclude_from_list_view := getattr(
+            self.Meta, "exclude_from_list_view", None
+        ):
             view = self.context.get("view", None)
             if view and not view.detail:
                 for exclude_field in exclude_from_list_view:

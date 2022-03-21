@@ -317,9 +317,7 @@ def _adapt_value_for_xlsx(fieldname, value, maximum_length=32767, _adapt=True):
     if fieldname == "license_expressions":
         value = combine_expressions(value)
 
-    # we only get this key in each dict of a list for some fields
-    mapping_key = mappings_key_by_fieldname.get(fieldname)
-    if mapping_key:
+    if mapping_key := mappings_key_by_fieldname.get(fieldname):
         value = [mapping[mapping_key] for mapping in value]
 
     # convert these to text lines, remove duplicates

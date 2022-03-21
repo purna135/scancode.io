@@ -509,9 +509,7 @@ class CodebaseResourceDetailsView(
         for entry in getattr(self.object, field_name):
             annotation_type = "info"
 
-            # Customize the annotation icon based on the policy compliance_alert
-            policy = entry.get("policy")
-            if policy:
+            if policy := entry.get("policy"):
                 annotation_type = policy.get("compliance_alert")
 
             annotations.append(

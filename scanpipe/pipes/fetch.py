@@ -107,8 +107,7 @@ def _get_skopeo_location(_cache=[]):
 
     # try a plugin-provided path second
     if not cmd_loc:
-        bin_location = get_location(FETCHCODE_SKOPEO_BINDIR)
-        if bin_location:
+        if bin_location := get_location(FETCHCODE_SKOPEO_BINDIR):
             cmd_loc = Path(bin_location) / "skopeo"
 
     # try the PATH
@@ -172,8 +171,7 @@ def get_docker_image_platform(docker_reference):
 
     inspection = json.loads(output)
     for manifest in inspection.get("manifests") or []:
-        platform = manifest.get("platform") or {}
-        if platform:
+        if platform := manifest.get("platform") or {}:
             return (
                 platform.get("os") or "linux",
                 platform.get("architecture") or "amd64",
@@ -197,8 +195,7 @@ def fetch_docker_image(docker_reference, to=None):
 
     skopeo_executable = _get_skopeo_location()
     platform_args = []
-    platform = get_docker_image_platform(docker_reference)
-    if platform:
+    if platform := get_docker_image_platform(docker_reference):
         os, arch, variant = platform
         if os:
             platform_args.append(f"--override-os={os}")
@@ -235,9 +232,7 @@ def _get_fetcher(url):
     """
     Returns the fetcher function based on the provided `url`.
     """
-    if url.startswith("docker://"):
-        return fetch_docker_image
-    return fetch_http
+    return fetch_docker_image if url.startswith("docker://") else fetch_http
 
 
 def fetch_urls(urls):

@@ -63,12 +63,10 @@ class ScanCodebase(Pipeline):
         """
         Extracts archives with extractcode.
         """
-        extract_errors = scancode.extract_archives(
+        if extract_errors := scancode.extract_archives(
             location=self.project.codebase_path,
             recurse=self.extract_recursively,
-        )
-
-        if extract_errors:
+        ):
             self.add_error("\n".join(extract_errors))
 
     def collect_and_create_codebase_resources(self):

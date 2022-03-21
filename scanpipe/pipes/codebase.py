@@ -44,10 +44,10 @@ def get_tree(resource, fields, codebase=None):
     resource_dict = {field: getattr(resource, field) for field in fields}
 
     if resource.is_dir:
-        children = [
-            get_tree(child, fields, codebase) for child in resource.children(codebase)
-        ]
-        if children:
+        if children := [
+            get_tree(child, fields, codebase)
+            for child in resource.children(codebase)
+        ]:
             resource_dict["children"] = sorted(children, key=sort_by_lower_name)
 
     return resource_dict
@@ -80,8 +80,7 @@ class ProjectCodebase:
         root = self.root
         if topdown:
             yield root
-        for resource in root.walk(topdown=topdown):
-            yield resource
+        yield from root.walk(topdown=topdown)
         if not topdown:
             yield root
 
